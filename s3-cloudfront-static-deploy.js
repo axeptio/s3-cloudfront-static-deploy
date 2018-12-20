@@ -14,14 +14,14 @@ const cloudfront = new AWS.CloudFront();
 */
 function success(data) {
   return {
-    status: 'success',
+    status: 'Success',
     result: data
   };
 }
 
 function error(message) {
   return {
-    status: 'error',
+    status: 'Error',
     message: message
   };
 }
@@ -55,13 +55,13 @@ module.exports = {
     return new Promise((resolve, reject) => {
       s3.putObject(putParams, (putErr) => {
         if (putErr) {
-          event('error during putObject');
+          event('Error during putObject');
           reject(new Error(error(putErr)));
         } else {
           event('Successfully uploaded data');
           cloudfront.createInvalidation(invaParams, (invaErr, data) => {
             if (invaErr) {
-              event('error during createInvalidation');
+              event('Error during createInvalidation');
               reject(new Error(error(invaErr)));
             } else {
               event('Successfully invalidate data');
