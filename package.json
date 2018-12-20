@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "aws-sdk": "^2.380.0"
+  },
+  "name": "s3-cloudfront-static-deploy",
+  "description": "",
+  "version": "0.0.1",
+  "main": "app.js",
+  "devDependencies": {
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb-base": "13.1.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-security": "^1.4.0"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "scripts": {
+    "start": "node test/test.js"
+  },
+  "author": "Arknoid",
+  "license": "MIT"
+}
