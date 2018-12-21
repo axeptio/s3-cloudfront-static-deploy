@@ -3,7 +3,7 @@
  */
 
 const { publishJson } = require('../');
-const random = require('slump');
+const randomWords = require('random-words');
 
 /*
  * Consts
@@ -16,12 +16,12 @@ const { myBucket, filename, distributionId } = require('./config');
  * Testing API
  */
 
-// Generate random Json
+// Generate Json with random words
 const content = JSON.stringify({
   name: 'testing with a random JSON',
-  float: random.float(),
-  string: random.string()
+  words: randomWords(30)
 });
+
 
 (async () => {
   try {
