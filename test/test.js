@@ -1,24 +1,27 @@
 /*
  * Require
  */
+
 const content = require('./test');
-const { publishFile } = require('../');
+const { publishJson } = require('../');
 
 /*
  * Consts
  */
+
 // Rename config.dist.json to config.json and complete it
 const { myBucket, filename, distributionId } = require('./config');
 
 /*
  * Testing API
  */
+
 (async () => {
   try {
-    let publishResult = await publishFile(myBucket, filename, distributionId, content, event => {
+    let publishResult = await publishJson(myBucket, filename, distributionId, content, event => {
       console.log(event);
     });
-    console.log(publishResult);
+    console.dir(publishResult, { depth: 5 });
   } catch (err) {
     console.log(err.message);
   }

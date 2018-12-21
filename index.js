@@ -1,1 +1,1 @@
-module.exports = require('./lib/s3-cloudfront-static-deploy');
+module.exports = require('./lib/api');
