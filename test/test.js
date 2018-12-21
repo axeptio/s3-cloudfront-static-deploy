@@ -2,7 +2,7 @@
  * Require
  */
 const content = require('./test');
-const { publishFile } = require('../s3-cloudfront-static-deploy');
+const { publishFile } = require('../');
 
 /*
  * Consts
