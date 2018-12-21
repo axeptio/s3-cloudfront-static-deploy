@@ -5,7 +5,7 @@
   },
   "name": "s3-cloudfront-static-deploy",
   "description": "",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "main": "app.js",
   "devDependencies": {
     "eslint": "^5.3.0",

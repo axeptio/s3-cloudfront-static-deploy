@@ -30,14 +30,21 @@ const content = JSON.stringify({
 
 // Methods to test
 const methods = {
-  publishFile: true,
   enableVersioning: true,
+  publishFile: true,
   listFileVersions: true,
   rollbackFile: true
 };
 
 (async () => {
   try {
+    if (methods.enableVersioning) {
+      const bucketVersioningResult = await enableVersioning(myBucket, true, event => {
+        console.log(event);
+      });
+      console.log(bucketVersioningResult);
+    }
+
     if (methods.publishFile) {
       const publishResult = await publishFile(
         myBucket,
@@ -51,12 +58,6 @@ const methods = {
       console.dir(publishResult, { depth: 5 });
     }
 
-    if (methods.enableVersioning) {
-      const bucketVersioningResult = await enableVersioning(myBucket, true, event => {
-        console.log(event);
-      });
-      console.log(bucketVersioningResult);
-    }
 
     if (methods.listFileVersions) {
       const versionsResult = await listFileVersions(myBucket, filename, event => {
