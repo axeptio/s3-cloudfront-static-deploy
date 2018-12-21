@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "aws-sdk": "^2.380.0"
+    "aws-sdk": "^2.380.0",
+    "slump": "^3.0.2"
   },
   "name": "s3-cloudfront-static-deploy",
   "description": "",

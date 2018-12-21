@@ -2,8 +2,8 @@
  * Require
  */
 
-const content = require('./test');
 const { publishJson } = require('../');
+const random = require('slump');
 
 /*
  * Consts
@@ -15,6 +15,13 @@ const { myBucket, filename, distributionId } = require('./config');
 /*
  * Testing API
  */
+
+// Generate random Json
+const content = JSON.stringify({
+  name: 'testing with a random JSON',
+  float: random.float(),
+  string: random.string()
+});
 
 (async () => {
   try {
