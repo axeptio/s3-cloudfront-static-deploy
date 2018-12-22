@@ -1,8 +1,8 @@
-# S3 cloudfront static deploy
+# :sunglasses: S3 cloudfront static deploy 
 
-Api node.js for rapid file deployment in an AWS S3 bucket with cloudFront invalidate, versioning and rollback.
+Node.js API for rapid file deployment in an AWS S3 bucket with cloudFront invalidate, versioning and rollback.
 
-## Installation
+## :rocket: Installation 
 
 > npm install --save s3-cloudfront-static-deploy
 
@@ -20,33 +20,60 @@ Windows:
 
 For the moment you have to create and configure your bucket authorization and cloudfront from AWS
 
-## API
+## :gear: API 
 
-All methods return a promise with datas or errors and they have callback event
+### **enableVersioning(bucket(string), isEnabled(bool), event(callback))**
+
+Enabled or suspended versionning of a bucket.
+
+Return promise with the status of the bucket versionning.
+
+### **publishFile(bucket(string), filename(string), distributionId(string), event(callback))**
+
+Create/update and invalidate file for cloudfront deploying.
+
+returns a promise containing the return of putFile and invalidateFile.
+
+### **rollbackFile(bucket(string),fileName(string),distributionId(string), event(callback))**
+
+Mark deleted the lasted version of a file in a bucket and invalidate on cloudfront.
+
+returns a promise containing the return of deleteFile and invalidateFile.
+
+### **listFileVersions(bucket(string),filename(string), event(callback))**
+
+List all versions of a file in a bucket.
+
+returns a promise containing data.
 
 ### **putFile(bucket(string), filename(string), content(string), event(callback))**
-Create or update a file in a bucket
+
+Create or update a file in a bucket.
+
+returns a promise containing data.
+
+### **deleteFile(bucket(string), filename(string), event(callback))**
+
+Apply deleted mark on a last version of a file in a bucket.
+
+returns a promise containing data.
+
 ### **invalidateFile(filename(string), distributionId(string), event(callback))**
+
 Invalidate file in cloudfront for deploying
-### **publishFile(bucket(string), filename(string), distributionId(string), event(callback))**
-Create/update and invalidate file for cloudfront deploy
-### **listFileVersions(bucket(string),filename(string), event(callback))**
-List all versions of a file in a bucket
-### **enableVersioning(bucket(string), isEnable(bool), event(callback))**
-Enabled or suspended versionning of a bucket
-### **rollbackFile(bucket(string),fileName(string),distributionId(string), event(callback))**
-Mark deleted the lasted version of a file in a bucket and invalidate 
 
-## Testing
+returns a promise containing data.
 
-you can test the deploying with sending a Json with random datas (words)
+## :eyes: Testing 
+
+You can test the deploying with sending a Json with random data (words)
 
 > Rename config.dist.json to config.dist
 
     {
     "myBucket": "your bucket name",
-    "filename": "path and filename",
-    "distributionId": "CloudFront distribution ID"
+    "filename": "path and filename on bucket",
+    "distributionId": "cloudfront distribution ID"
     }
 
 > npm start

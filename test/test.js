@@ -8,10 +8,11 @@ const {
   enableVersioning,
   rollbackFile
 } = require('../');
+
 const randomWords = require('random-words');
 
 /*
- * Consts
+ * Const
  */
 
 // Rename config.dist.json to config.json and complete it
@@ -30,21 +31,22 @@ const content = JSON.stringify({
 
 // Methods to test
 const methods = {
-  enableVersioning: false,
+  enableVersioning: true,
   publishFile: true,
-  listFileVersions: false,
+  listFileVersions: true,
   rollbackFile: false
 };
 
 (async () => {
   try {
+    // enableVersioning
     if (methods.enableVersioning) {
       const bucketVersioningResult = await enableVersioning(myBucket, true, event => {
         console.log(event);
       });
       console.log(bucketVersioningResult);
     }
-
+    // publishFile
     if (methods.publishFile) {
       const publishResult = await publishFile(
         myBucket,
@@ -57,7 +59,7 @@ const methods = {
       );
       console.dir(publishResult, { depth: 5 });
     }
-
+    // listFileVersions
     if (methods.listFileVersions) {
       const versionsResult = await listFileVersions(myBucket, filename, event => {
         console.log(event);
@@ -65,6 +67,7 @@ const methods = {
       console.log(versionsResult);
     }
 
+    // rollbackFile
     if (methods.rollbackFile) {
       const rollbackResult = await rollbackFile(myBucket, filename, event => {
         console.log(event);
