@@ -30,10 +30,10 @@ const content = JSON.stringify({
 
 // Methods to test
 const methods = {
-  enableVersioning: true,
+  enableVersioning: false,
   publishFile: true,
   listFileVersions: false,
-  rollbackFile: true
+  rollbackFile: false
 };
 
 (async () => {
