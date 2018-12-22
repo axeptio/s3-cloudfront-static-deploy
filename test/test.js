@@ -32,7 +32,7 @@ const content = JSON.stringify({
 const methods = {
   enableVersioning: true,
   publishFile: true,
-  listFileVersions: true,
+  listFileVersions: false,
   rollbackFile: true
 };
 
@@ -57,7 +57,6 @@ const methods = {
       );
       console.dir(publishResult, { depth: 5 });
     }
-
 
     if (methods.listFileVersions) {
       const versionsResult = await listFileVersions(myBucket, filename, event => {
