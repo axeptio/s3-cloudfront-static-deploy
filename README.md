@@ -1,6 +1,6 @@
-# :sunglasses: S3 cloudfront static deploy 
+# S3 cloudfront static deploy 
 
-Node.js API for rapid file deployment in an AWS S3 bucket with cloudFront invalidate, versioning and rollback.
+Simple node API for rapid file deployment (like JSON or other) in an AWS S3 bucket with cloudFront invalidate, versioning and rollback.
 
 ## :rocket: Installation 
 
@@ -28,9 +28,9 @@ Enabled or suspended versionning of a bucket.
 
 Return promise with the status of the bucket versionning.
 
-### **publishFile(bucket(string), filename(string), distributionId(string), event(callback))**
+### **publishFile(bucket(string), filename(string), distributionId(string), content((Buffer, Typed Array, Blob, String, ReadableStream)), event(callback))**
 
-Create/update and invalidate file for cloudfront deploying.
+Create/update and invalidate file for cloudfront deploying. (tested only with a JSON stringify)
 
 returns a promise containing the return of putFile and invalidateFile.
 
@@ -46,9 +46,9 @@ List all versions of a file in a bucket.
 
 returns a promise containing data.
 
-### **putFile(bucket(string), filename(string), content(string), event(callback))**
+### **putFile(bucket(string), filename(string), content((Buffer, Typed Array, Blob, String, ReadableStream)), event(callback))**
 
-Create or update a file in a bucket.
+Create or update a file in a bucket. (tested only with a JSON stringify)
 
 returns a promise containing data.
 
