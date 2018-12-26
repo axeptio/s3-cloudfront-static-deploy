@@ -1,79 +1,59 @@
-# S3 cloudfront static deploy 
+# S3 CloudFront static deploy
 
 Simple node API for rapid file deployment (like JSON or other) in an AWS S3 bucket with cloudFront invalidate, versioning and rollback.
 
-## :rocket: Installation 
+## :rocket: Installation
 
-> npm install --save s3-cloudfront-static-deploy
-
-Create a file for the credentials
-
-Mac/Linux: 
-> ~/.aws/credentials
-
-Windows: 
-> C:\Users\USERNAME\.aws\credentials
-
-    [default]
-    aws_access_key_id = your_access_key
-    aws_secret_access_key = your_secret_key
+> npm install --save s3-cloudfront-static-deploy aws-sdk
 
 For the moment you have to create and configure your bucket authorization and cloudfront from AWS
 
-## :gear: API 
+## :gear: API
 
-### **enableVersioning(bucket(string), isEnabled(bool), event(callback))**
+### Parameters
 
-> Enabled or suspended versionning of a bucket.
+#### AWS Clients
 
-Return promise with the status of the bucket versionning.
+Instead of instanciating its own S3 and CloudFront clients, this package requires you to pass yours as the first parameter of every API functions. For example:
 
-### **publishFile(bucket(string), filename(string), distributionId(string), content(Buffer, Typed Array, Blob, String, ReadableStream), event(callback))**
+```javascript
+const AWS = require('aws-sdk');
+const clients = {
+  s3: new AWS.S3(),
+  cloudfront: new AWS.CloudFront()
+};
+publishFile(clients, options);
+```
 
-> Create/update and invalidate file for cloudfront deploying. (tested only with a JSON stringify)
+#### Options
+The second parameter of the functions are the options required to execute this specific job. Documented in JSDoc.
 
-returns a promise containing the return of putFile and invalidateFile.
+#### Event Handlers
 
-### **rollbackFile(bucket(string),fileName(string),distributionId(string), event(callback))**
+Due to their async nature, functions of this lib return only promises. When completed, a function will resolve, and in any erroneous case, it will reject. If you need extra control over the execution flow, (especially when there are several steps), you can use the `onEvent` param that is always the last parameter of the function call.
 
-> Mark deleted the lasted version of a file in a bucket and invalidate on cloudfront.
+```javascript
+publishFile(clients, options, event => {
+  console.log(event.type); // "success" / "error" / "info" / "progress"
+  console.log(event.method); // "invalidateFile"
+  console.log(event.message); // "successfully invalidated the file"
+});
+```
 
-returns a promise containing the return of deleteFile and invalidateFile.
+#### Available functions
 
-### **listFileVersions(bucket(string),filename(string), event(callback))**
+- `enableVersioning` Enabled or suspended versionning of a bucket. Options are: `bucket`, `isEnabled` 
+- `publishFile` Create/update and invalidate file for cloudfront deploying. (tested only with a JSON stringify)
+- `rollbackFile` Mark deleted the lasted version of a file in a bucket and invalidate on cloudfront.
+- `listFileVersions` List all versions of a file in a bucket.
+- `putFile` Create or update a file in a bucket. (tested only with a JSON stringify)
+- `deleteFile` Apply deleted mark on a last version of a file in a bucket.
+- `invalidateFile` Invalidate file in cloudfront for deploying
 
-> List all versions of a file in a bucket.
-
-returns a promise containing data.
-
-### **putFile(bucket(string), filename(string), content(Buffer, Typed Array, Blob, String, ReadableStream), event(callback))**
-
-> Create or update a file in a bucket. (tested only with a JSON stringify)
-
-returns a promise containing data.
-
-### **deleteFile(bucket(string), filename(string), event(callback))**
-
-> Apply deleted mark on a last version of a file in a bucket.
-
-returns a promise containing data.
-
-### **invalidateFile(filename(string), distributionId(string), event(callback))**
-
-> Invalidate file in cloudfront for deploying
-
-returns a promise containing data.
-
-## :eyes: Testing 
+## :eyes: Testing
 
 You can test the deploying with sending a Json with random data (words)
 
-> Rename config.dist.json to config.json
-
-    {
-        "myBucket": "your bucket name",
-        "filename": "path and filename on bucket",
-        "distributionId": "cloudfront distribution ID"
-    }
-
-> npm run test
+```sh
+export BUCKET_NAME=${S3BucketName} DISTRIBUTION_ID=${CloudFrontDistributionID} && npm run test
+```
