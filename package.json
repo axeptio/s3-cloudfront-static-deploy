@@ -26,7 +26,7 @@
     "node": ">=8.0.0"
   },
   "scripts": {
-    "start": "node test/test.js"
+    "test": "node test/test.js"
   },
   "author": "Arknoid",
   "license": "MIT"

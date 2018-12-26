@@ -76,4 +76,4 @@ You can test the deploying with sending a Json with random data (words)
         "distributionId": "cloudfront distribution ID"
     }
 
-> npm start
+> npm run test
