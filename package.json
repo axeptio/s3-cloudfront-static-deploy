@@ -11,7 +11,7 @@
   "name": "s3-cloudfront-static-deploy",
   "description": "Simple node API for rapid file deployment (like JSON or other) in an AWS S3 bucket with cloudFront invalidate, versioning and rollback.",
   "version": "0.3.2",
-  "main": "test/test.js",
+  "main": "lib/api.js",
   "keywords": [
     "s3",
     "aws",
