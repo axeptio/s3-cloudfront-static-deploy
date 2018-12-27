@@ -6,7 +6,7 @@
   "homepage": "https://github.com/Arknoid/s3-cloudfront-static-deploy/blob/master/README.md",
   "name": "s3-cloudfront-static-deploy",
   "description": "Simple node API for rapid file deployment (like JSON or other) in an AWS S3 bucket with cloudFront invalidate, versioning and rollback.",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "files": [
     "lib"
   ],
