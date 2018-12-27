@@ -1,6 +1,12 @@
 /*
  * Require
  */
+const AWS = require('aws-sdk');
+
+const clients = {
+  s3: new AWS.S3(),
+  cloudfront: new AWS.CloudFront()
+};
 
 const {
   publishFile,
@@ -14,10 +20,9 @@ const randomWords = require('random-words');
 /*
  * Const
  */
-
-// Rename config.dist.json to config.json and complete it
-const { myBucket, filename, distributionId } = require('./config');
-
+const bucket = process.env.BUCKET_NAME;
+const distributionId = process.env.DISTRIBUTION_ID;
+const filename = process.env.FILENAME || Date.now().toString() + '.json';
 /*
  * Testing API
  */
@@ -31,9 +36,9 @@ const content = JSON.stringify({
 
 // Methods to test
 const methods = {
-  enableVersioning: true,
+  enableVersioning: false,
   publishFile: true,
-  listFileVersions: true,
+  listFileVersions: false,
   rollbackFile: false
 };
 
@@ -41,27 +46,32 @@ const methods = {
   try {
     // enableVersioning
     if (methods.enableVersioning) {
-      const bucketVersioningResult = await enableVersioning(myBucket, true, event => {
-        console.log(event);
-      });
-      console.log(bucketVersioningResult);
-    }
-    // publishFile
-    if (methods.publishFile) {
-      const publishResult = await publishFile(
-        myBucket,
-        filename,
-        distributionId,
-        content,
+      const bucketVersioningResult = await enableVersioning(
+        clients,
+        { bucket: bucket, isEnabled: true },
         event => {
           console.log(event);
         }
       );
+      console.log(bucketVersioningResult);
+    }
+    // publishFile
+    if (methods.publishFile) {
+      const publishResult = await publishFile(clients,
+        {
+          bucket,
+          filename,
+          distributionId,
+          content
+        },
+        event => {
+          console.log(event);
+        });
       console.dir(publishResult, { depth: 5 });
     }
     // listFileVersions
     if (methods.listFileVersions) {
-      const versionsResult = await listFileVersions(myBucket, filename, event => {
+      const versionsResult = await listFileVersions(clients, { bucket, filename }, event => {
         console.log(event);
       });
       console.log(versionsResult);
@@ -69,9 +79,12 @@ const methods = {
 
     // rollbackFile
     if (methods.rollbackFile) {
-      const rollbackResult = await rollbackFile(myBucket, filename, event => {
-        console.log(event);
-      });
+      const rollbackResult = await rollbackFile(
+        clients, { bucket, filename, distributionId },
+        event => {
+          console.log(event);
+        }
+      );
       console.log(rollbackResult);
     }
   } catch (err) {
