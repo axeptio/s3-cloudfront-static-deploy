@@ -36,9 +36,9 @@ const content = JSON.stringify({
 
 // Methods to test
 const methods = {
-  enableVersioning: true,
+  enableVersioning: false,
   publishFile: true,
-  listFileVersions: true,
+  listFileVersions: false,
   rollbackFile: false
 };
 
