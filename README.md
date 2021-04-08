@@ -42,13 +42,15 @@ publishFile(clients, options, event => {
 
 #### Available functions
 
-- `enableVersioning` Enabled or suspended versionning of a bucket. Options are: `bucket`, `isEnabled` 
+- `enableVersioning` Enabled or suspended versionning of a bucket. Options are: `bucket`, `isEnabled`
 - `publishFile` Create/update and invalidate file for cloudfront deploying. (tested only with a JSON stringify)
+- `publishFiles` Create/update and invalidate files for cloudfront deploying. (tested only with a JSON stringify)
 - `rollbackFile` Mark deleted the lasted version of a file in a bucket and invalidate on cloudfront.
 - `listFileVersions` List all versions of a file in a bucket.
 - `putFile` Create or update a file in a bucket. (tested only with a JSON stringify)
 - `deleteFile` Apply deleted mark on a last version of a file in a bucket.
 - `invalidateFile` Invalidate file in cloudfront for deploying
+- `invalidateFiles` Invalidate files in cloudfront for deploying
 
 ## :eyes: Testing
 
