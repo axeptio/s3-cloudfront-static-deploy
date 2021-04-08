@@ -10,6 +10,7 @@ const clients = {
 
 const {
   publishFile,
+  publishFiles,
   listFileVersions,
   enableVersioning,
   rollbackFile
@@ -22,7 +23,8 @@ const randomWords = require('random-words');
  */
 const bucket = process.env.BUCKET_NAME;
 const distributionId = process.env.DISTRIBUTION_ID;
-const filename = process.env.FILENAME || Date.now().toString() + '.json';
+const filename = process.env.FILENAME || Date.now().toString() + '_1.json';
+const filename2 = Date.now().toString() + '_2.json';
 /*
  * Testing API
  */
@@ -33,11 +35,17 @@ const content = JSON.stringify({
   words: randomWords(30)
 });
 
+const content2 = JSON.stringify({
+  name: 'random JSON',
+  words: randomWords(30)
+});
+
 
 // Methods to test
 const methods = {
   enableVersioning: false,
   publishFile: true,
+  publishFiles: true,
   listFileVersions: false,
   rollbackFile: false
 };
@@ -63,6 +71,20 @@ const methods = {
           filename,
           distributionId,
           content
+        },
+        event => {
+          console.log(event);
+        });
+      console.dir(publishResult, { depth: 5 });
+    }
+    // publishFiles
+    if (methods.publishFiles) {
+      const publishResult = await publishFiles(clients,
+        {
+          bucket,
+          filenames: [filename, filename2],
+          distributionId,
+          contents: [content, content2]
         },
         event => {
           console.log(event);
