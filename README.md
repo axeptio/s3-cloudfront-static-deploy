@@ -46,6 +46,7 @@ publishFile(clients, options, event => {
 - `publishFile` Create/update and invalidate file for cloudfront deploying. (tested only with a JSON stringify)
 - `publishFiles` Create/update and invalidate files for cloudfront deploying. (tested only with a JSON stringify)
 - `rollbackFile` Mark deleted the lasted version of a file in a bucket and invalidate on cloudfront.
+- `rollbackFiles` Mark deleted the lasted version of files in a bucket and invalidate on cloudfront.
 - `listFileVersions` List all versions of a file in a bucket.
 - `putFile` Create or update a file in a bucket. (tested only with a JSON stringify)
 - `deleteFile` Apply deleted mark on a last version of a file in a bucket.
