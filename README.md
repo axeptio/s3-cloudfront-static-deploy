@@ -4,7 +4,7 @@ Simple node API for rapid file deployment (like JSON or other) in an AWS S3 buck
 
 ## :rocket: Installation
 
-> npm install --save s3-cloudfront-static-deploy aws-sdk
+> npm i @axeptio/s3-cloudfront-static-deploy
 
 For the moment you have to create and configure your bucket authorization and cloudfront from AWS
 
