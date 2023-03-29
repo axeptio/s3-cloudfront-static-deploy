@@ -1,14 +1,16 @@
 {
+  "name": "@axeptio/s3-cloudfront-static-deploy",
+  "version": "0.0.0-semantic-release",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Arknoid/s3-cloudfront-static-deploy"
+    "url": "https://github.com/axeptio/s3-cloudfront-static-deploy"
   },
-  "homepage": "https://github.com/Arknoid/s3-cloudfront-static-deploy/blob/master/README.md",
-  "name": "s3-cloudfront-static-deploy",
-  "description": "Simple node API for rapid file deployment (like JSON or other) in an AWS S3 bucket with cloudFront invalidate, versioning and rollback.",
-  "version": "0.4.0",
+  "homepage": "https://github.com/axeptio/s3-cloudfront-static-deploy#readme",
+  "description": "Simple node API for rapid file deployment (like JSON or other) in an AWS S3 bucket with cloudFront invalidation, versioning and rollback.",
   "files": [
-    "lib"
+    "lib",
+    "LICENCE",
+    "README.md"
   ],
   "main": "lib/api.js",
   "keywords": [
@@ -27,7 +29,8 @@
     "eslint-plugin-node": "^8.0.0",
     "eslint-plugin-security": "^1.4.0",
     "mocha": "^5.2.0",
-    "random-words": "^1.1.0"
+    "random-words": "^1.1.0",
+    "semantic-release": "^21.0.0"
   },
   "engines": {
     "node": ">=8.0.0"
@@ -35,6 +38,9 @@
   "scripts": {
     "test": "node test/test.js"
   },
-  "author": "Arknoid",
-  "license": "MIT"
+  "author": "Axeptio",
+  "license": "MIT",
+  "contributors": [
+    "Olivier Malige <omalige@gmail.com> (https://github.com/Olivier-Malige)"
+  ]
 }
