@@ -60,3 +60,5 @@ You can test the deploying with sending a Json with random data (words)
 ```sh
 export BUCKET_NAME=${S3BucketName} DISTRIBUTION_ID=${CloudFrontDistributionID} && npm run test
 ```
+
+test online
