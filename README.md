@@ -50,6 +50,7 @@ publishFile(clients, options, event => {
 - `listFileVersions` List all versions of a file in a bucket.
 - `putFile` Create or update a file in a bucket. (tested only with a JSON stringify)
 - `deleteFile` Apply deleted mark on a last version of a file in a bucket.
+- `deleteFiles` Apply deleted mark on last version of files in a bucket.
 - `invalidateFile` Invalidate file in cloudfront for deploying
 - `invalidateFiles` Invalidate files in cloudfront for deploying
 
