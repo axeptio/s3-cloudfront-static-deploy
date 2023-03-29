@@ -1,6 +1,6 @@
 # S3 CloudFront static deploy
 
-Simple node API for rapid file deployment (like JSON or other) in an AWS S3 bucket with cloudFront invalidate, versioning and rollback.
+Simple node API for rapid file deployment (like JSON or other) in an AWS S3 bucket with cloudFront invalidation, versioning and rollback.
 
 ## :rocket: Installation
 
