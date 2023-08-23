@@ -1,30 +1,22 @@
-/*
- * Require
- */
-const AWS = require('aws-sdk');
+require('dotenv').config();
+const { CloudFrontClient } = require('@aws-sdk/client-cloudfront');
+const { S3Client } = require('@aws-sdk/client-s3');
 
-const clients = {
-  s3: new AWS.S3(),
-  cloudfront: new AWS.CloudFront()
-};
-
-const {
-  publishFile,
-  publishFiles,
-  listFileVersions,
-  enableVersioning,
-  rollbackFile
-} = require('../');
+const { publishFile, publishFiles, listFileVersions, enableVersioning, rollbackFile, rollbackFiles } = require('../lib/api');
 
 const randomWords = require('random-words');
 
-/*
- * Const
- */
 const bucket = process.env.BUCKET_NAME;
 const distributionId = process.env.DISTRIBUTION_ID;
-const filename = process.env.FILENAME || Date.now().toString() + '_1.json';
-const filename2 = Date.now().toString() + '_2.json';
+const filename = process.env.FILENAME || `${process.env.FILENAME_PREFIX ?? ''}${new Date().toISOString()}_1.json`;
+const filename2 = `${process.env.FILENAME_PREFIX ?? ''}${new Date().toISOString()}_2.json`;
+
+const region = process.env.REGION;
+const config = region ? { region } : {};
+const clients = {
+  s3: new S3Client(config),
+  cloudfront: new CloudFrontClient(config)
+};
 /*
  * Testing API
  */
@@ -40,32 +32,29 @@ const content2 = JSON.stringify({
   words: randomWords(30)
 });
 
-
 // Methods to test
 const methods = {
   enableVersioning: false,
   publishFile: true,
   publishFiles: true,
-  listFileVersions: false,
-  rollbackFile: false
+  listFileVersions: true,
+  rollbackFile: false,
+  rollbackFiles: true
 };
 
 (async () => {
   try {
     // enableVersioning
     if (methods.enableVersioning) {
-      const bucketVersioningResult = await enableVersioning(
-        clients,
-        { bucket: bucket, isEnabled: true },
-        event => {
-          console.log(event);
-        }
-      );
+      const bucketVersioningResult = await enableVersioning(clients, { bucket, isEnabled: true }, event => {
+        console.log(event);
+      });
       console.log(bucketVersioningResult);
     }
     // publishFile
     if (methods.publishFile) {
-      const publishResult = await publishFile(clients,
+      const publishResult = await publishFile(
+        clients,
         {
           bucket,
           filename,
@@ -74,12 +63,14 @@ const methods = {
         },
         event => {
           console.log(event);
-        });
+        }
+      );
       console.dir(publishResult, { depth: 5 });
     }
     // publishFiles
     if (methods.publishFiles) {
-      const publishResult = await publishFiles(clients,
+      const publishResult = await publishFiles(
+        clients,
         {
           bucket,
           filenames: [filename, filename2],
@@ -88,7 +79,8 @@ const methods = {
         },
         event => {
           console.log(event);
-        });
+        }
+      );
       console.dir(publishResult, { depth: 5 });
     }
     // listFileVersions
@@ -101,12 +93,17 @@ const methods = {
 
     // rollbackFile
     if (methods.rollbackFile) {
-      const rollbackResult = await rollbackFile(
-        clients, { bucket, filename, distributionId },
-        event => {
-          console.log(event);
-        }
-      );
+      const rollbackResult = await rollbackFile(clients, { bucket, filename, distributionId }, event => {
+        console.log(event);
+      });
+      console.log(rollbackResult);
+    }
+
+    // rollbackFiles
+    if (methods.rollbackFiles) {
+      const rollbackResult = await rollbackFiles(clients, { bucket, filenames: [filename, filename2], distributionId }, event => {
+        console.log(event);
+      });
       console.log(rollbackResult);
     }
   } catch (err) {
